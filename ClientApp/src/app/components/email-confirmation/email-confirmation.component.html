@@ -1,0 +1,30 @@
+<div class="card shadow-sm" style="width: 26rem;">
+    <div class="card-body">
+      <div class="card-title text-center">
+        <h4>Shopnet</h4><i class="fa fa-envira text-info fa-lg"></i>
+        </div>
+      <form #form="ngForm" (ngSubmit)="submit(form)">
+        <div class="form-group">
+          <label>email</label>
+          <input 
+            type="text"
+            class="form-control"
+            placeholder="example@gmail.com"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="emailInput"
+            required
+            appUserExist
+          >
+          <div class="text-danger" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors.required">the email is required</span>
+            <span *ngIf="email.errors?.userNotExists">the user does not exists</span>
+          </div>
+        </div><hr>
+        <button class="btn btn-outline-primary " type="submit" [disabled]="!form.valid">
+          <i class="fa fa-envelope"></i> Send me an email
+        </button>
+        <a class="float-right" routerLink="/login">Or sign in <i class="fa fa-user"></i></a>
+      </form>
+    </div>
+  </div>

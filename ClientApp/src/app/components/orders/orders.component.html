@@ -1,0 +1,32 @@
+<section>
+  <h4><i class="fa fa-sort mb-4"></i> orders table</h4>
+  <table class="table table-striped table-bordered text-center shadow-sm"> 
+    <thead>
+      <tr>
+        <th>owner</th>
+        <th>date created</th>
+        <th>details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template [ngIf]="invoices != 0" [ngIfElse]="empty">
+        <tr *ngFor="let invoice of invoices | paginate:config">
+          <td>{{invoice.username}}</td>
+          <td>{{invoice.dateCreated}}</td>
+          <td>
+            <a [routerLink]="['', 'invoice-details', invoice.id]">
+              <i class="fa fa-edit"></i>
+              View details
+            </a>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template #empty>
+        <tr>
+          <td colspan="3">there are no orders available yet.</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <pagination-controls class="float-right mt-2" (pageChange)="pageChanged($event)"></pagination-controls>
+</section>

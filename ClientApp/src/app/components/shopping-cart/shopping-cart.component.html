@@ -1,0 +1,28 @@
+<section>
+  <h3>Products Catalog</h3>
+    <label>search by categories</label>
+    <select class="form-control" (change)="filterByCategory($event)">
+      <option value="all">all products</option>
+      <option *ngFor="let category of categories">{{category.name}}</option>
+    </select>
+    <h5 *ngIf="products==0" class="mt-3">there's no items available yet.</h5>
+  <div class="row mt-5">
+    <div class="col-lg-4" *ngFor="let product of products">
+      <div class="card shadow-sm" style="width: 18rem;">
+        <img [src]="product.imgUrl" class="card-img-top" [alt]="product.name">
+        <div class="card-body">
+          <h4>{{product.name}}</h4>
+          <p>Price: {{product.price | currency}}</p>
+          <button class="btn btn-outline-success btn-sm mr-2" (click)="addToCart(product.id)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteFromCart(product.id)"
+            [disabled]="getQuantity(carts, product) == 0">
+            <i class="fa fa-minus"></i>
+          </button>
+          <p class="float-right">Quantity: <span class="text-primary">{{getQuantity(carts, product)}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

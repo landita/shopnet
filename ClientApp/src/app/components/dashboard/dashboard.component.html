@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerlink="/"><i class="fa fa-envira text-info fa-lg"></i></a>
+      </li>
+      <li class="nav-item" *ngIf="user.role == 'admin'">
+        <a class="nav-link" [routerLink]="['/', 'products']">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/', 'shopping-cart']">shopping cart</a>
+      </li>
+      <li class="nav-item" *ngIf="user.role == 'admin'">
+        <a class="nav-link" [routerLink]="['/', 'invoice']">
+          <span class="badge badge-secondary">{{invoice}}</span>
+          Invoice
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/', 'orders']">orders list</a>
+      </li>
+    </ul>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{user.email}}
+        </a>
+        <div aria-labelledby="navbarDropdown" ngbDropdownMenu>
+          <a ngbDropdownItem (click)="logout()"><i class="fa fa-power-off"></i> Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

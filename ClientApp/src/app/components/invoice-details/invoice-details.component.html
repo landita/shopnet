@@ -1,0 +1,62 @@
+<section>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h3 class="mb-3"><i class="fa fa-archive"></i> Invoice details</h3><hr>
+      <h5>User info</h5>
+      <form>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>card name</label>
+              <input type="text" [value]="invoice?.cardName" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>card number</label>
+              <input type="text" [value]="invoice?.cardNumber" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>cvv</label>
+              <input type="text" [value]="invoice?.cvv" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>expiration</label>
+              <input type="text" [value]="invoice?.expirarion" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>address</label>
+              <textarea class="form-control" readonly>{{invoice?.address}}</textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+      <h5 class="mt-4 mb-3">User's products order</h5>
+        <table class="table table-sm text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th>name</th>
+              <th>quantity</th>
+              <th>price</th>
+            </tr>
+          </thead>
+          <tbody>
+              <ng-container *ngIf="invoice?.stocks">
+                <tr *ngFor="let stock of invoice?.stocks">
+                  <td>{{stock.name}}</td>
+                  <td>{{stock.quantity}}</td>
+                  <td>{{stock.totalPrice | currency}}</td>
+                </tr>
+              </ng-container>
+          </tbody>
+        </table><hr>
+        <h5 class="float-right text-primary">Total Amount: {{total(invoice?.stocks) | currency}}</h5>
+    </div>
+  </div>
+</section>

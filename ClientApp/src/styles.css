@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+.ng-valid{
+    border-color: rgb(29, 218, 199);
+}
+.ng-invalid.ng-touched{
+    border-color: rgb(235, 101, 101);
+}
+#toast-container > div {
+    opacity:1;
+}

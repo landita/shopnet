@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-lg-4 mb-5">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title text-center">
+          <h3>Products Form</h3>
+        </div>
+        <form #form="ngForm" (ngSubmit)="submit(productModel);form.reset()" autocomplete="off" >
+          <input type="hidden" name="id" [value]="productModel.id">
+          <div class="form-group">
+            <label>name</label>
+            <input 
+              type="text"
+              class="form-control"
+              placeholder="name"
+              name="name"
+              #name="ngModel"
+              [(ngModel)]="productModel.name"
+              required
+              maxlength="50"
+            >
+            <div class="text-danger" *ngIf="name.invalid && name.touched">
+              <span *ngIf="name.errors.required">the name is required</span>
+              <span *ngIf="name.errors.maxlength">the name has to be less than 50 characters</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>category</label>
+            <select 
+              class="form-control"
+              name="categorySelect"
+              #categorySelect="ngModel"  
+              [(ngModel)]="productModel.category" 
+              required
+            >
+              <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+            </select>
+            <div class="text-danger" *ngIf="categorySelect.invalid && categorySelect.touched">
+              <span *ngIf="categorySelect.errors.required">the category is required</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>price</label>
+            <input 
+              type="number"
+              class="form-control"
+              name="price"
+              #price="ngModel"
+              [(ngModel)]="productModel.price"
+              required
+              step="0.00"
+            >
+            <div class="text-danger" *ngIf="price.invalid && price.touched">
+              <span *ngIf="price.errors.required">the price is required</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>img-url</label>
+            <input
+              type="url"
+              class="form-control"
+              name="imgUrl"
+              #imgUrl="ngModel"
+              [(ngModel)]="productModel.imgUrl"
+              required
+              url
+            >
+            <div class="text-danger" *ngIf="imgUrl.invalid && imgUrl.touched">
+              <span *ngIf="imgUrl.errors.required">the image url is required</span>
+              <span *ngIf="imgUrl.errors?.url">the image url is not valid</span>
+            </div>
+          </div>
+          <hr>
+          <button class="btn btn-outline-primary" type="submit" [disabled]="!form.valid">
+            <i class="fa fa-edit"></i>
+            Save changes
+          </button>
+          <button class="btn btn-outline-secondary float-right" type="button"
+            [style.display]="cancel" 
+            (click)="cancelButton()">
+            <i class="fa fa-ban"></i>
+            Cancel changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <table class="table table-bordered table-striped  text-center">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>img</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template [ngIf]="products != 0" [ngIfElse]="empty">
+          <tr *ngFor="let product of products | paginate:config">
+            <td (click)="clickBoard(product)">{{product.id}}</td>
+            <td (click)="clickBoard(product)" >{{product.name}}</td>
+            <td (click)="clickBoard(product)">{{product.category}}</td>
+            <td (click)="clickBoard(product)">{{product.price | currency}}</td>
+            <td (click)="clickBoard(product)">
+              <img [src]="product.imgUrl" height="30px" width="50px">
+            </td>
+            <td>
+              <i class="fa fa-trash text-danger fa-lg" (click)="deleteProduct(product.id)"></i>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #empty>
+          <tr>
+            <td colspan="5">there's no data available.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <input type="text" class="form-control w-25 mt-1 float-left" placeholder="search..." (keyup)="filterProducts($event)">
+    <pagination-controls class="float-right mt-2" (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+</div>

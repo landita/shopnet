@@ -1,0 +1,49 @@
+<div class="card shadow-sm" style="width: 26rem;">
+  <div class="card-body">
+    <div class="card-title text-center">
+      <h4>Shopnet</h4><i class="fa fa-envira text-info fa-lg"></i>
+      </div>
+    <form #form="ngForm" (ngSubmit)="submit(form)">
+      <div class="form-group">
+        <label>email</label>
+        <input 
+          type="text"
+          class="form-control"
+          placeholder="example@gmail.com"
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="emailInput"
+          required
+        >
+        <div class="text-danger" *ngIf="email.invalid && email.touched">
+          <span *ngIf="email.errors.required">the email is required</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>password</label>
+        <input 
+          type="password"
+          class="form-control"
+          name="password"
+          #password="ngModel"
+          [(ngModel)]="passwordInput"
+          required
+          appCheckUser
+          emailConfirm="email"
+          minlength="8"
+        >
+        <div class="text-danger" *ngIf="password.invalid && password.touched">
+          <span *ngIf="password.errors.required">the password is required</span>
+          <span *ngIf="password.errors.minlength">
+            the password must be 8 characters long, and it has {{password.errors.minlength.actualLength}}
+          </span>
+          <span *ngIf="password.errors?.checkUser">the email or password are not correct</span>
+        </div>
+      </div><hr>
+      <button class="btn btn-outline-primary " type="submit" [disabled]="!form.valid">
+        <i class="fa fa-user"></i> Sign In
+      </button>
+      <a class="float-right" routerLink="/email-confirmation">forgot your password <i class="fa fa-lock"></i></a>
+    </form>
+  </div>
+</div>
