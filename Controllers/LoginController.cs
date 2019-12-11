@@ -78,7 +78,7 @@ namespace shotnet.Controllers{
         public async Task sendEmailConfirmation(string email){
             var user = await _userManager.FindByEmailAsync(email);
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("support", "nelsontorresl2019@gmail.com"));
+            message.From.Add(new MailboxAddress("support", "your email"));
             message.To.Add(new MailboxAddress("password reset confirmation", email));
             message.Subject = "please use this link to reset your password";
             message.Body = new TextPart("plain"){
@@ -86,7 +86,7 @@ namespace shotnet.Controllers{
             };
             using(var client = new SmtpClient()){
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("nelsontorresl2019@gmail.com", "32GnawFilosofica2019");
+                client.Authenticate("your email", "your password");
                 client.Send(message);
                 client.Disconnect(true);
             }
